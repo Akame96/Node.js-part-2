@@ -1,3 +1,16 @@
+// Do
+// Write a router with the following routes:
+// GET /api/planets: return all planets (JSON) with 200
+// GET /api/planets/:id: return a planet (JSON) by id with 200
+// POST /api/planets: create a planet, return only 201 code and a success JSON with key msg
+// Make sure every planet is created with id and name.
+// PUT /api/planets/:id: update a planet by id, return only 200 code and a success JSON with key msg
+// DELETE /api/planets/:id: delete a planet by id, return only 200 code and a success JSON with key msg
+// Validate planet fields where appropriate.
+// Use
+// The dummy database of planets from the previous exercise.
+// joi library for validation.
+
 import express, { Request, Response } from 'express';
 import Joi from 'joi';
 
@@ -39,10 +52,6 @@ router.get('/planets/:id', (req: Request, res: Response) => {
 // POST /api/planets: creare un pianeta
 router.post('/planets', (req: Request, res: Response) => {
   const { error } = planetSchema.validate(req.body);
-
-  if (error) {
-    return res.status(400).json({ msg: error.details[0].message });
-  }
 
   const newPlanet: Planet = {
     id: planets.length + 1, // Auto-increment id
