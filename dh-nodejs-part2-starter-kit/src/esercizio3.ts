@@ -1,4 +1,3 @@
-
 // Do
 // Add planets Controller (controllers/planets.ts) consisting of the following functions:
 // getAll
@@ -14,8 +13,8 @@
 // Array.prototype.map higher-order function to Update.
 // Array.prototype.filter higher-order function to Delete.
 
-import { Request, Response } from 'express';
-import Joi from 'joi';
+import { Request, Response } from "express";
+import Joi from "joi";
 
 // Dummy database
 interface Planet {
@@ -30,7 +29,7 @@ let planets: Planet[] = [
 
 // utilizzo Joi
 const planetSchema = Joi.object({
-  name: Joi.string().min(3).required()
+  name: Joi.string().min(3).required(),
 });
 
 // Controllers
@@ -39,7 +38,7 @@ export const getAll = (req: Request, res: Response) => {
 };
 
 export const getOneById = (req: Request, res: Response) => {
-  const planet = planets.find(p => p.id === parseInt(req.params.id));
+  const planet = planets.find((p) => p.id === parseInt(req.params.id));
   if (!planet) {
     return res.status(404).json({ msg: "Planet not found" });
   }
@@ -54,10 +53,11 @@ export const create = (req: Request, res: Response) => {
 
   const newPlanet: Planet = {
     id: planets.length + 1,
-    name: req.body.name
+    name: req.body.name,
   };
 
-  planets = [...planets, newPlanet]; //usando lo spread operator per aggiungere altri pianeti
+  //usando lo spread operator per aggiungere altri pianeti
+  planets = [...planets, newPlanet];
   res.status(201).json({ msg: "Planet created successfully" });
 };
 
@@ -68,26 +68,26 @@ export const updateById = (req: Request, res: Response) => {
   }
 
   const planetId = parseInt(req.params.id);
-  const planetExists = planets.some(p => p.id === planetId);
+  const planetExists = planets.some((p) => p.id === planetId);
 
   if (!planetExists) {
     return res.status(404).json({ msg: "Planet not found" });
   }
 
-  planets = planets.map(p => p.id === planetId ? { ...p, name: req.body.name } : p); // Using map to update
+  planets = planets.map((p) =>
+    p.id === planetId ? { ...p, name: req.body.name } : p
+  ); // Using map to update
   res.status(200).json({ msg: "Planet updated successfully" });
 };
 
 export const deleteById = (req: Request, res: Response) => {
   const planetId = parseInt(req.params.id);
-  const planetExists = planets.some(p => p.id === planetId);
+  const planetExists = planets.some((p) => p.id === planetId);
 
   if (!planetExists) {
     return res.status(404).json({ msg: "Planet not found" });
   }
 
-  planets = planets.filter(p => p.id !== planetId); 
+  planets = planets.filter((p) => p.id !== planetId);
   res.status(200).json({ msg: "Planet deleted successfully" });
 };
-
-

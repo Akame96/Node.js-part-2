@@ -19,7 +19,7 @@ CREATE TABLE planets(
 setupDb();
 
 // GET
-export const getAllPlanets = async (req: Request, res: Response) => {
+const getAllPlanets = async (req: Request, res: Response) => {
   try {
     const planets = await db.any(`SELECT * FROM planets`);
     res.json(planets);
@@ -29,11 +29,12 @@ export const getAllPlanets = async (req: Request, res: Response) => {
 };
 
 // GET by ID
-export const getPlanetById = async (req: Request, res: Response) => {
+const getPlanetById = async (req: Request, res: Response) => {
   const planetId = parseInt(req.params.id);
 
   try {
-    const planet = await db.one(`
+    const planet = await db.one(
+      `
       SELECT * FROM planets WHERE id = $1`,
       Number(planetId)
     );
@@ -44,7 +45,7 @@ export const getPlanetById = async (req: Request, res: Response) => {
 };
 
 // POST
-export const createPlanet = async (req: Request, res: Response) => {
+const createPlanet = async (req: Request, res: Response) => {
   const { name } = req.body;
 
   try {
@@ -56,7 +57,7 @@ export const createPlanet = async (req: Request, res: Response) => {
 };
 
 // PUT
-export const updatePlanet = async (req: Request, res: Response) => {
+const updatePlanet = async (req: Request, res: Response) => {
   const planetId = parseInt(req.params.id);
   const { name } = req.body;
 
@@ -72,7 +73,7 @@ export const updatePlanet = async (req: Request, res: Response) => {
 };
 
 // DELETE
-export const deletePlanet = async (req: Request, res: Response) => {
+const deletePlanet = async (req: Request, res: Response) => {
   const planetId = parseInt(req.params.id);
 
   try {
@@ -93,4 +94,12 @@ const createImage = async (req: Request, res: Response) => {
   } else {
     res.status(400).json({ error: "image failed to upload" });
   }
+};
+
+export {
+  getAllPlanets,
+  getPlanetById,
+  createPlanet,
+  deletePlanet,
+  createImage,
 };
