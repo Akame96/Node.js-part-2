@@ -30,7 +30,7 @@ let planets: Planet[] = [
 
 // utilizzo joi
 const planetSchema = Joi.object({
-  name: Joi.string().min(3).required()
+  name: Joi.string().required()
 });
 
 // GET /api/planets

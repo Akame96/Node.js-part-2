@@ -1,5 +1,6 @@
 import { Response, Request } from "express";
 import pgPromise from "pg-promise";
+import Joi from 'joi';
 
 const db = pgPromise()("postgres://postgres:postgres@localhost:5432/");
 
@@ -43,6 +44,11 @@ const getPlanetById = async (req: Request, res: Response) => {
     res.status(500).json("errore");
   }
 };
+
+// utilizzo joi
+const planetSchema = Joi.object({
+  name: Joi.string().required()
+});
 
 // POST
 const createPlanet = async (req: Request, res: Response) => {
@@ -99,6 +105,7 @@ const createImage = async (req: Request, res: Response) => {
 export {
   getAllPlanets,
   getPlanetById,
+  updatePlanet,
   createPlanet,
   deletePlanet,
   createImage,
