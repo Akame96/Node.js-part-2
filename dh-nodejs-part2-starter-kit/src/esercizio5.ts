@@ -1,6 +1,7 @@
 import { Response, Request } from "express";
 import pgPromise from "pg-promise";
 import Joi from 'joi';
+import { configDotenv } from "dotenv";
 
 const db = pgPromise()("postgres://postgres:postgres@localhost:5432/");
 
